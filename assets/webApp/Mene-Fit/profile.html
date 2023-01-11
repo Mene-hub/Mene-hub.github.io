@@ -1,0 +1,57 @@
+<html>
+    <body onload="schedeRequest();">
+        
+        <select id="lemieschede">
+
+        </select>
+        <button onclick="schedaRequest()">seleziona</button>
+
+        <script>
+            function schedaRequest(){
+                var value = document.getElementById("lemieschede").value;
+                var get = new XMLHttpRequest();
+                // 2. Configure it: GET-request for the URL /article/.../load
+                get.open('GET', 'http://claudio.menegotto.unaux.com/assets/webApp/Mene-Fit/schede/scheda.php?scheda=' + value, true);
+
+                // 3. Send the request over the network
+                get.send();
+
+                // 4. This will be called after the response is received
+                get.onload = function() {
+                    if (get.status != 200) { // analyze HTTP status of the response
+                        console.log(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+                    } else { // show the result
+                        var GitRepose = JSON.parse(get.response);
+                        var template;
+                        for(var i = 0; i<GitRepose.length; i++)
+                        {
+                        }
+                    }
+                }
+            }
+
+            function schedeRequest(){
+                var get = new XMLHttpRequest();
+                // 2. Configure it: GET-request for the URL /article/.../load
+                get.open('GET', 'http://claudio.menegotto.unaux.com/assets/webApp/Mene-Fit/schede/scheda.php?scheda=all');
+
+                // 3. Send the request over the network
+                get.send();
+
+                // 4. This will be called after the response is received
+                get.onload = function() {
+                    if (get.status != 200) { // analyze HTTP status of the response
+                        console.log(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+                    } else { // show the result
+                        var GitRepose = JSON.parse(get.response);
+                        document.getElementById("lemieschede").innerHTML = "";
+                        for(var i = 0; i<GitRepose.schede.length; i++)
+                        {
+                            document.getElementById("lemieschede").innerHTML += "<option value="+ GitRepose.schede[i].id +">" + GitRepose.schede[i].nome + "</option>";
+                        }
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
