@@ -20,10 +20,9 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const firestore = getFirestore(app);
 
-const data = doc(firestore, "TwitchUsers/431682373");//TwitchUsers/user_id
-
 //Get Data
-async function readASingleDocument(){
+async function readASingleDocument(id){
+    const data = doc(firestore, "TwitchUsers/"+id);//TwitchUsers/user_id
     const mySnapshot = await getDoc(data);
     if(mySnapshot.exists()){
         const docData = mySnapshot.data();
@@ -31,10 +30,9 @@ async function readASingleDocument(){
     }
 }
 
-readASingleDocument();
-
 //Set Data
-function writeDocument(){
+function writeDocument(id){
+    const data = doc(firestore, "TwitchUsers/"+id);//TwitchUsers/user_id
     const docData ={
         GrabbedPoints : {
             Efesto : 10,
@@ -44,4 +42,38 @@ function writeDocument(){
     setDoc(data, docData, {merge : true});
 }
 
-//writeDocument();
+
+async function readIDFromMap(ip){
+
+    //get Ip
+    var ipConnection = doc(firestore, "AddressMap/" + ip);
+    const mySnapshot = await getDoc(ipConnection);
+    if(mySnapshot.exists()){
+        const docData = mySnapshot.data();
+        document.body.innerHTML = JSON.stringify(docData);
+    }
+}
+
+
+window.onload = function(){
+
+    switch(window.location.href.toString().split("?")[1].split("=")[0]){
+
+        case "IDfromIP":
+            readIDFromMap(window.location.href.toString().split("=")[1]);
+            break;
+
+        case "IPChange":
+            break;
+
+        case "GetData":
+            readASingleDocument(window.location.href.toString().split("=")[1]);
+            break;
+
+        case "PutData":
+            writeDocument(window.location.href.toString().split("=")[1]);
+            break;
+
+    }
+    
+}
