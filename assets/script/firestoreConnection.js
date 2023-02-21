@@ -27,7 +27,10 @@ async function readASingleDocument(){
     const mySnapshot = await getDoc(data);
     if(mySnapshot.exists()){
         const docData = mySnapshot.data();
-        console.log(JSON.stringify(docData));
+        docData.forEach(item => {
+            console.log(item[0] + " : " + item[1]);
+        });
+        //console.log(JSON.stringify(docData));
     }
 }
 
