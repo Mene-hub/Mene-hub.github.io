@@ -43,3 +43,5 @@ function writeDocument(){
     }
     setDoc(data, docData, {merge : true});
 }
+
+writeDocument();
