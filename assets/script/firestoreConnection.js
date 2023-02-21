@@ -28,7 +28,7 @@ try {
 
   // Document was found in the cache. If no cached document exists,
   // an error will be returned to the 'catch' block below.
-  console.log("Cached document data:", doc.data());
+  alert("Cached document data:", doc.data());
 } catch (e) {
   console.log("Error getting cached document:", e);
 }
