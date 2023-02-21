@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,8 +20,9 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const firestore = getFirestore(app);
 
-const data = doc(firestore, "TwitchUsers/431682373");
+const data = doc(firestore, "TwitchUsers/431682373");//TwitchUsers/user_id
 
+//Get Data
 async function readASingleDocument(){
     const mySnapshot = await getDoc(data);
     if(mySnapshot.exists()){
@@ -31,3 +32,14 @@ async function readASingleDocument(){
 }
 
 readASingleDocument();
+
+//Set Data
+function writeDocument(){
+    const docData ={
+        GrabbedPoints : {
+            Efesto : 10,
+            micheleposa : 70
+        }
+    }
+    setDoc(data, docData, {merge : true});
+}
