@@ -22,13 +22,6 @@ const db = getFirestore(app);
 
 const docRef = doc(db, "TwitchUsers","431682373");
 
-// Get a document, forcing the SDK to fetch from the offline cache.
-try {
-  const doc = await getDocFromCache(docRef);
-
-  // Document was found in the cache. If no cached document exists,
-  // an error will be returned to the 'catch' block below.
-  alert("Cached document data:", doc.data());
-} catch (e) {
-  console.log("Error getting cached document:", e);
-}
+db.collection("TwitchUsers").get().then((snapshop) => {
+    console.log(snapshot.docs);
+});
