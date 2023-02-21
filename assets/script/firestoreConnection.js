@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getFirestore, getDocFromCache, doc  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,10 +18,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
+const firestore = getFirestore(app);
 
-const docRef = doc(db, "TwitchUsers","431682373");
+const data = doc(firestore, "TwitchUsers/431682373");
 
-db.collection("TwitchUsers").get().then((snapshop) => {
-    console.log(snapshot.docs);
-});
+async function readASingleDocument(){
+    const mySnapshot = await getDoc(data);
+    if(mySnapshot.exists()){
+        const docData = mySnapshot.data();
+        console.log(JSON.stringify(docData));
+    }
+}
+
+readASingleDocument();
